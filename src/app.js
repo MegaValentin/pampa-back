@@ -3,8 +3,17 @@ import morgan from "morgan"
 import cookieParser from "cookie-parser"
 import userRouters from "./routes/user.routes.js"
 import articleRouters from "./routes/article.routes.js"
+import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const app = express()
+
+app.use(cors({
+    origin: process.env.REACT_URL_DES,
+    credentials:true
+}))
 
 app.use(morgan('dev'))
 app.use(express.json())

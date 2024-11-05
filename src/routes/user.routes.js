@@ -7,6 +7,7 @@ import {
     getUser,
     getUsers,
     profile,
+    verifyToken
     
 } from "../controllers/user.controller.js"
 import { authRequired } from "../middleware/validator.token.js"
@@ -22,6 +23,7 @@ router.post('/adduser', validateSchema(registerSchemas),authRequired, addUser)
 router.get('/users', authRequired, getUsers)
 router.get('/user',authRequired, getUser)
 router.delete('/user/:id',authRequired, deleteUser)
+router.get("/verify", )
 
 
 export default router
