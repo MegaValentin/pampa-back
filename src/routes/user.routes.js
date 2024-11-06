@@ -23,7 +23,7 @@ router.post('/adduser', validateSchema(registerSchemas),authRequired, addUser)
 router.get('/users', authRequired, getUsers)
 router.get('/user',authRequired, getUser)
 router.delete('/user/:id',authRequired, deleteUser)
-router.get("/verify", )
+router.get("/verify", verifyToken )
 
 
 export default router
