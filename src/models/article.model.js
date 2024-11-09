@@ -10,27 +10,13 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category: {
-        type: String,
-        required: true,
-        enum : ["Filosofia", "Musica", "Arte", "Literatura", "Otros"]
-    },
     images: [String],
-    socialMediaLinks: {
-        facebook: String,
-        instagram: String,
-        twitter: String
-    },
-    spotifyLink: String,
-    youtubeLink: String,
+    tags: String,
     createAt: {
         type: Date,
         default: Date.now
     },
-    isBandOrArtist: {
-        type: Boolean,
-        default: false
-    }
+    
 })
 
 export default mongoose.model("Article", articleSchema) 

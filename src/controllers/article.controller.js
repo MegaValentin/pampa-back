@@ -37,23 +37,18 @@ export const addArticle = async(req, res) => {
         const {title, 
             subtitle, 
             content, 
-            category, 
+            
             images, 
-            socialMediaLinks, 
-            spotifyLink, 
-            youtubeLink, 
-            isBandOrArtist} = req.body
+            tags,
+            } = req.body
 
         const newArticle = new Article({
             title,
             subtitle,
             content,
-            category,
+            
             images,
-            socialMediaLinks,
-            spotifyLink,
-            youtubeLink,
-            isBandOrArtist
+            tags,
         })
 
         await newArticle.save()
@@ -96,12 +91,10 @@ export const updatedArticle = async(req, res) => {
         const {title, 
             subtitle, 
             content, 
-            category, 
+             
             images, 
-            socialMediaLinks, 
-            spotifyLink, 
-            youtubeLink, 
-            isBandOrArtist} = req.body
+            tags
+            } = req.body
     
         const updatedArticle = await Article.findByIdAndUpdate(
             id,
@@ -109,12 +102,10 @@ export const updatedArticle = async(req, res) => {
                 title, 
                 subtitle, 
                 content, 
-                category, 
+                
                 images, 
-                socialMediaLinks, 
-                spotifyLink, 
-                youtubeLink, 
-                isBandOrArtist 
+                tags,
+                
             },
             {new: true}
         )
