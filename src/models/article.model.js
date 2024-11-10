@@ -14,9 +14,17 @@ const articleSchema = new mongoose.Schema({
     tags: String,
     createAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        get: (date) => date.toISOString().split("T")[0]
     },
-    
-})
+    status: {
+        type: String,
+        enum: ["borrador", "listo", "subido"], // Solo permite estos tres valores
+        default: "borrador"
+    }
+}, {
+    toJSON: { getters: true },
+    toObject: { getters: true }
+});
 
-export default mongoose.model("Article", articleSchema) 
+export default mongoose.model("Article", articleSchema);
