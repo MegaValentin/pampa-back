@@ -32,7 +32,8 @@ export const getBook = async (req, res) => {
     }
 }
 
-export const addBooks = async (req, res) => {
+export const addBooks = async(req, res) => {
+    console.log(req.body);
     try {
         const { title,
             author,
@@ -40,7 +41,7 @@ export const addBooks = async (req, res) => {
             publicationDate,
             coverImage,
             pages,
-            createdAt } = req.params
+            createdAt } = req.body
             
         const newBook = new Books({
             title,

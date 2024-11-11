@@ -15,7 +15,7 @@ router.get("/books", authRequired, getBooks)
 
 router.get("/book/:id", authRequired, getBook)
 
-router.post("/addbooks", authRequired, addBooks)
+router.post("/addbook", authRequired, addBooks)
 
 router.delete("/books/:id", authRequired, deleteBooks)
 
