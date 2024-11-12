@@ -8,9 +8,9 @@ import { authRequired } from "../middleware/validator.token.js"
 
 const router = Router()
 
-router.get("/articles", authRequired, getArticles)
+router.get("/articles", getArticles)
 
-router.get("/article/:id", authRequired, getArticle)
+router.get("/article/:id", getArticle)
 
 router.post("/addarticle", authRequired, addArticle)
 
