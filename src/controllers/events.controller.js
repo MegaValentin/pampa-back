@@ -33,34 +33,37 @@ export const getEvent = async(req, res) => {
 
 }
 
-export const addEvent = async(req, res) => {
+export const addEvent = async (req, res) => {
     console.log(req.body);
     try {
-        const { title,
-            description,
-        date } = req.body
-            
+        const { title, description, date } = req.body;
+
+        const eventDate = new Date(date);
+        const currentDate = new Date();
+
+        currentDate.setHours(0, 0, 0, 0);
+        if (eventDate < currentDate) {
+            return res.status(400).json({
+                message: "No se pueden crear eventos en fechas anteriores a la actual",
+            });
+        }
         const newEvent = new Events({
             title,
             description,
-        date
-        })
-
-        await newEvent.save()
-
+            date
+        });
+        await newEvent.save();
         res.status(201).json({
             message: "Evento creado exitosamente",
             newEvent
-        })
-
-
+        });
     } catch (error) {
-        console.error("Error al crear el articulo: ", error)
+        console.error("Error al crear el evento: ", error);
         res.status(500).json({
-            message: "Error al crear el articulo"
-        })
+            message: "Error al crear el evento"
+        });
     }
-}
+};
 
 export const deleteEvent = async(req, res) => {
     try{
@@ -79,5 +82,19 @@ export const deleteEvent = async(req, res) => {
         res.status(500).json({
             message: "Error al elimnar el evento"
         })
+    }
+}
+
+export const deleteOldEvents = async () => {
+    const currentDate = new Date()
+
+    const twoDaysAgo = new Date(currentDate.setDate(currentDate.getDate() -1))
+
+    try {
+        const result = await Events.deleteMany({date: {$lt:twoDaysAgo}})
+        console.log(`Eventos eliminados: ${result.deletedCount}`)
+
+    } catch (error) {
+        console.error("Error al eliminar eventos antiguos: ", error)
     }
 }
