@@ -11,9 +11,9 @@ import {
 
 const router = Router()
 
-router.get("/books", authRequired, getBooks)
+router.get("/books", getBooks)
 
-router.get("/book/:id", authRequired, getBook)
+router.get("/book/:id", getBook)
 
 router.post("/addbook", authRequired, addBooks)
 
