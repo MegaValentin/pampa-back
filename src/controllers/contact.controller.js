@@ -1,4 +1,15 @@
 import Contact from "../models/contact.model.js";
+import BasicContact from "../models/contacts.model.js"
+
+export const getBasicContact = async(req, res) => {
+    try {
+        const basicContact = await BasicContact.find()
+        res.json(basicContact)
+
+    } catch (error) {
+        return res.status(500).json({message:"Error al buscar el contacto"})
+    }
+}
 
 export const getContacts = async(req, res) => {
     try {
@@ -31,7 +42,7 @@ export const getContact = async(req, res) => {
 export const addContact = async(req, res) => {
     const { name, email, message } = req.body
 
-    if(!name || !email ) {
+    if(!name || !email || !message ) {
         return res.status(400).json({
             error: "El nombre y el email son obligatorios"
         })
@@ -39,12 +50,14 @@ export const addContact = async(req, res) => {
 
     try {
         const newContact = new Contact({name, email, message})
-
         await newContact.save()
+
+        const newBasicContact = new BasicContact({ name, email });
+        await newBasicContact.save();
 
         return res.status(201).json({
             message: "El contacto se ha guardado correctamente",
-            contact: newContact
+            newContact
         })
 
     } catch (error) {
@@ -83,7 +96,27 @@ export const updatedMessageStatus = async(req, res) => {
 
 export const deleteContact = async(req, res) => {
     try {
-        const contact = await Contact.findByIdAndDelete(req.params)
+        const contact = await Contact.findByIdAndDelete(req.params.id)
+        if(!contact) return res.status(404).json({
+            message: "Contacto no encontrado"
+        })
+
+        res.json({
+            message: "Contacto eliminado exitosamente",
+            contact
+        })
+
+    } catch (error) {
+        console.error("Error al eliminar el contacto", error)
+        res.status(500).json({
+            message: "Error al eliminar el contacto"
+        })
+    }
+}
+
+export const deleteBasicContact = async(req, res) => {
+    try {
+        const contact = await BasicContact.findByIdAndDelete(req.params.id)
         if(!contact) return res.status(404).json({
             message: "Contacto no encontrado"
         })

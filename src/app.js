@@ -1,10 +1,7 @@
 import  express  from "express"
 import morgan from "morgan"
 import cookieParser from "cookie-parser"
-import userRouters from "./routes/user.routes.js"
-import articleRouters from "./routes/article.routes.js"
-import booksRouters from "./routes/books.routes.js"
-import eventRouters from "./routes/events.routes.js"
+import { routesPath } from "./routes/index.js"
 import cors from 'cors'
 import dotenv from 'dotenv'
 import cron from "node-cron"
@@ -26,9 +23,9 @@ cron.schedule("0 0 * * *", () => {
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(cookieParser())
-app.use('/api/auth', userRouters)
-app.use('/api', articleRouters)
-app.use('/api', booksRouters)
-app.use('/api', eventRouters)
+
+routesPath.forEach(({ path, router }) => {
+    app.use(path, router);
+});
 
 export default app
