@@ -74,7 +74,7 @@ export const deleteEvent = async(req, res) => {
 
         res.json({
             message:"Evento eliminado exitosamente",
-            deleteBook
+            deleteEvent
 
         })
     } catch(error){
