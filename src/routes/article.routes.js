@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { getArticle, 
-    getArticles, 
-    addArticle, 
-    deleteArticle, 
-    updatedArticle } from "../controllers/article.controller.js";
+import {
+    getArticle,
+    getArticles,
+    addArticle,
+    deleteArticle,
+    updatedArticle,
+    changeStatus,
+    
+} from "../controllers/article.controller.js";
 import { authRequired } from "../middleware/validator.token.js"
 import multer from "multer";
 
@@ -19,6 +23,10 @@ router.post("/addarticle", authRequired, upload.array("images"), addArticle)
 
 router.delete("/article/:id", authRequired, deleteArticle)
 
-router.put("/article/:id", authRequired, updatedArticle) 
+router.put("/article/:id", authRequired, updatedArticle)
+
+router.patch("/article/:id/status", authRequired, changeStatus)
+
+
 
 export default router

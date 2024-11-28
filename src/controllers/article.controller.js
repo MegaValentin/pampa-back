@@ -137,3 +137,29 @@ export const updatedArticle = async (req, res) => {
 
 }
 
+export const changeStatus= async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        if (!['borrador', 'listo', 'subido'].includes(status)) {
+            return res.status(400).json({ message: 'Estado no válido' });
+        }
+
+        const updatedArticle = await Article.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!updatedArticle) {
+            return res.status(404).json({ message: 'Artículo no encontrado' });
+        }
+
+        res.json({ message: 'Estado actualizado', article: updatedArticle });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al actualizar el estado' });
+    }
+}
+
+
